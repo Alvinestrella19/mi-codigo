@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Auto Scroll</title>
+</head>
+<body>
+    <script>
+        // Configura el tiempo entre scrolls en milisegundos
+        const scrollInterval = 3000;
+        let scrollingDown = true; // Variable para almacenar la dirección del scroll
+        let scrollCount = 0; // Variable para contar el número de desplazamientos
+
+        // Lista de URLs de los posts de la web
+        const posts = [
+            'https://ticoli.exblog.jp/33911462/',
+            'https://ticoli.exblog.jp/33911451/',
+            'https://ticoli.exblog.jp/33911437/',
+            'https://ticoli.exblog.jp/33911413/',
+            'https://ticoli.exblog.jp/33911404/',
+            'https://ticoli.exblog.jp/33911159/',
+            'https://ticoli.exblog.jp/33911132/',
+            'https://ticoli.exblog.jp/33911128/',
+            'https://ticoli.exblog.jp/33911106/',
+            'https://ticoli.exblog.jp/33911112/',
+            'https://ticoli.exblog.jp/33911118/',
+            // Agrega aquí más URLs de los posts
+        ];
+
+        // Función de auto scroll
+        function autoScroll() {
+            if (scrollingDown) {
+                window.scrollBy(0, window.innerHeight); // Scroll hacia abajo por la altura de la ventana
+            } else {
+                window.scrollBy(0, -window.innerHeight); // Scroll hacia arriba por la altura de la ventana
+            }
+            
+            // Verifica si ha llegado al final de la página
+            if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
+                scrollingDown = false; // Cambia la dirección del scroll cuando llega al final
+            } else if (window.scrollY === 0) {
+                scrollingDown = true; // Cambia la dirección del scroll cuando llega al principio
+                scrollCount++; // Incrementa el contador de desplazamientos hacia arriba
+            }
+
+            // Verifica si se han realizado 1 desplazamientos hacia arriba
+            if (scrollCount === 1) {
+                redireccionar(); // Llama a la función de redireccionamiento
+            }
+        }
+
+        // Función para redireccionar
+        function redireccionar() {
+            // Selecciona una URL aleatoria de la lista de posts
+            const destino = posts[Math.floor(Math.random() * posts.length)];
+            // URL simulada como proveniente de Google
+            const referrer = 'https://www.google.com/search?q=tu+busqueda';
+            
+            // Redirigir a la URL de destino simulando la referencia de Google
+            window.location.href = ${destino}?referrer=${encodeURIComponent(referrer)};
+        }
+
+        // Configura el intervalo para hacer scroll
+        setInterval(autoScroll, scrollInterval);
+    </script>
+</body>
+</html>
